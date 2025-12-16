@@ -73,10 +73,18 @@ export const Login=async(req,res)=>{
             expiresIn:'1d'
 
         })
+        
+        const userData = {
+            id: isEmailExists._id,
+            email: isEmailExists.email,
+            name: isEmailExists.name
+        }
+        
         res.status(200).json({
             success:true,
             message:"Login Successful",
-            token
+            token,
+            user: userData
         })
     } catch (error) {
         
