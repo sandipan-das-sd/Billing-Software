@@ -1,9 +1,50 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Register as RegisterAPI } from '../services/authApi';
+import useAuth from '../context/authContext';
+
+
 export default function Register() {
+    const[name,setName]=useState('');
+    const [email,setEmail]=useState('');
+    const [password,setPassword]=useState('');
+    const[loading,setLoading]=useState(false);
+    const[error,setError]=useState('');
+    const { Register } = useAuth();
+    const navigate = useNavigate();
+
+  const handleOnchnage=(e)=>{
+    const {name, value} = e.target;
+    if(name === 'name') setName(value);
+    if(name === 'email') setEmail(value);
+    if(name === 'password') setPassword(value);
+  }
+
+  const handleSubmit=async(e)=>{
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      const response=await RegisterAPI(name,email,password);
+      
+      if(response.success)
+      {
+        Register(response.user, response.token);
+        navigate('/home');
+      } else {
+        setError(response.message || 'Registration failed');
+      }
+    } catch (err) {
+        console.error(err);
+      setError(err.response?.data?.message || 'Network error. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  }
  return (
         <main className="flex items-center justify-center w-full px-4 mt-10">
-            <form className="flex w-full flex-col max-w-96">
+            <form onSubmit={handleSubmit} className="flex w-full flex-col max-w-96">
         
                 <a href="https://prebuiltui.com" className="mb-8" title="Go to PrebuiltUI">
                     <svg className="size-10" width="30" height="33" viewBox="0 0 30 33" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -15,21 +56,29 @@ export default function Register() {
                 <h2 className="text-4xl font-medium text-gray-900">Sign up</h2>
         
                 <p className="mt-4 text-base text-gray-500/90">
-                    Please enter email and password to access.
+                    Please enter your details to create an account.
                 </p>
+        
+                {error && (
+                    <div className="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                        {error}
+                    </div>
+                )}
         
 
          <div className="mt-10">
                     <label className="font-medium">Name</label>
                     <input
-                        placeholder="Please enter your email"
+                        placeholder="Please enter your name"
                         className="mt-2 rounded-md ring ring-gray-200 focus:ring-2 focus:ring-indigo-600 outline-none px-3 py-3 w-full"
                         required
                         type="text"
                         name="name"
+                        value={name}
+                        onChange={handleOnchnage}
                     />
                 </div>
-                <div className="mt-10">
+                <div className="mt-6">
                     <label className="font-medium">Email</label>
                     <input
                         placeholder="Please enter your email"
@@ -37,6 +86,8 @@ export default function Register() {
                         required
                         type="email"
                         name="email"
+                        value={email}
+                        onChange={handleOnchnage}
                     />
                 </div>
         
@@ -48,17 +99,20 @@ export default function Register() {
                         required
                         type="password"
                         name="password"
+                        value={password}
+                        onChange={handleOnchnage}
                     />
                 </div>
         
                 <button
                     type="submit"
-                    className="mt-8 py-3 w-full cursor-pointer rounded-md bg-indigo-600 text-white transition hover:bg-indigo-700"
+                    disabled={loading}
+                    className="mt-8 py-3 w-full cursor-pointer rounded-md bg-indigo-600 text-white transition hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    Register
+                    {loading?'Registering...':'Register'}
                 </button>
                 <p className='text-center py-8'>
-                    Already have an account? <Link to="/login" className="text-indigo-600 hover:underline">Sign up</Link>
+                    Already have an account? <Link to="/login" className="text-indigo-600 hover:underline">Sign in</Link>
                 </p>
             </form>
         </main>

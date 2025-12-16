@@ -31,7 +31,7 @@ try {
         id:newUser._id
     }
 
-    const token=jwt.sign(payload,process.envJWT_SECRET,{
+    const token=jwt.sign(payload,process.env.JWT_SECRET,{
         expiresIn:'1d'
     })
 
