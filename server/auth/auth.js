@@ -20,13 +20,32 @@ try {
     const hashPassword=await bcrypt.hash(password,10);
     const newUser=new UserModel({
         email,
-        password:hashPassword
+        password:hashPassword,
+        name
     })
     await newUser.save();
+    
+
+    const payload={
+        email:newUser.email,
+        id:newUser._id
+    }
+
+    const token=jwt.sign(payload,process.envJWT_SECRET,{
+        expiresIn:'1d'
+    })
+
+    const userData={
+        id:newUser._id,
+        email:newUser.email,
+        name:newUser.name
+    }
     res.status(201).json({
         success:true,
         message:"User registered successfully",
-        user:newUser
+        token,
+        user:userData
+      
     })
 } catch (error) {
     return res.status(500).json({

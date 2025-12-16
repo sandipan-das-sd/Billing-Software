@@ -33,6 +33,12 @@ export const AuthProvider=({children})=>{
         localStorage.removeItem('user');
     }
 
+    const Register=(userData,token)=>{
+        setUser(userData);
+        setUserToken(token);
+        localStorage.setItem('token',token);
+        localStorage.setItem('user',JSON.stringify(userData));
+    }
 
     return(
         <AuthContext.Provider value={{
@@ -41,6 +47,7 @@ export const AuthProvider=({children})=>{
             isAuthenticated:!!token,
             Login,
             Logout,
+            Register,
             loading
         }}
         >{children}</AuthContext.Provider>
