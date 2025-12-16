@@ -1,78 +1,56 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 export default function Auth() {
   return (
-     <>
-     
-      <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            alt="Your Company"
-            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-            className="mx-auto h-10 w-auto"
-          />
-          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">Sign in to your account</h2>
-        </div>
-
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
-            <div>
-              <label htmlFor="email" className="block text-sm/6 font-medium text-gray-100">
-                Email address
-              </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  autoComplete="email"
-                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm/6 font-medium text-gray-100">
-                  Password
-                </label>
-                <div className="text-sm">
-                  <a href="#" className="font-semibold text-indigo-400 hover:text-indigo-300">
-                    Forgot password?
-                  </a>
+        <main className="flex items-center justify-center w-full px-4 mt-10">
+            <form className="flex w-full flex-col max-w-96">
+        
+                <a href="https://prebuiltui.com" className="mb-8" title="Go to PrebuiltUI">
+                    <svg className="size-10" width="30" height="33" viewBox="0 0 30 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="m8 4.55 6.75 3.884 6.75-3.885M8 27.83v-7.755L1.25 16.19m27 0-6.75 3.885v7.754M1.655 8.658l13.095 7.546 13.095-7.546M14.75 31.25V16.189m13.5 5.976V10.212a2.98 2.98 0 0 0-1.5-2.585L16.25 1.65a3.01 3.01 0 0 0-3 0L2.75 7.627a3 3 0 0 0-1.5 2.585v11.953a2.98 2.98 0 0 0 1.5 2.585l10.5 5.977a3.01 3.01 0 0 0 3 0l10.5-5.977a3 3 0 0 0 1.5-2.585"
+                            stroke="#1d293d" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                </a>
+        
+                <h2 className="text-4xl font-medium text-gray-900">Sign in</h2>
+        
+                <p className="mt-4 text-base text-gray-500/90">
+                    Please enter email and password to access.
+                </p>
+        
+                <div className="mt-10">
+                    <label className="font-medium">Email</label>
+                    <input
+                        placeholder="Please enter your email"
+                        className="mt-2 rounded-md ring ring-gray-200 focus:ring-2 focus:ring-indigo-600 outline-none px-3 py-3 w-full"
+                        required
+                        type="email"
+                        name="email"
+                    />
                 </div>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  autoComplete="current-password"
-                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
-                />
-              </div>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-              >
-                Sign in
-              </button>
-            </div>
-          </form>
-
-          <p className="mt-10 text-center text-sm/6 text-gray-400">
-            Not a member?{' '}
-            <a href="#" className="font-semibold text-indigo-400 hover:text-indigo-300">
-              Start a 14 day free trial
-            </a>
-          </p>
-        </div>
-      </div>
-    </>
-  )
+        
+                <div className="mt-6">
+                    <label className="font-medium">Password</label>
+                    <input
+                        placeholder="Please enter your password"
+                        className="mt-2 rounded-md ring ring-gray-200 focus:ring-2 focus:ring-indigo-600 outline-none px-3 py-3 w-full"
+                        required
+                        type="password"
+                        name="password"
+                    />
+                </div>
+        
+                <button
+                    type="submit"
+                    className="mt-8 py-3 w-full cursor-pointer rounded-md bg-indigo-600 text-white transition hover:bg-indigo-700"
+                >
+                    Login
+                </button>
+                <p className='text-center py-8'>
+                    Don't have an account? <Link to="/register" className="text-indigo-600 hover:underline">Sign up</Link>
+                </p>
+            </form>
+        </main>
+    );
 }
